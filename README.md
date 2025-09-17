@@ -52,7 +52,7 @@ graph TD
 make install
 make azurelogin    # Automatically configure Azure AI credentials
 make check-config  # Verify setup
-foundry-pipeline-assistant --question "Which pipelines failed last night?"
+make run          # Run with example question
 ```
 
 ### **Option 2: Manual Setup**
@@ -74,7 +74,9 @@ foundry-pipeline-assistant --question "Which pipelines failed last night?"
 
 4. **Run Analysis**:
    ```bash
-   foundry-pipeline-assistant --question "Which pipelines failed last night?"
+   make run  # Uses example question
+   # OR with custom question:
+   make run-custom
    ```
 
 ## 🔧 **Azure AI Foundry Configuration**
@@ -98,6 +100,42 @@ cp .env.example .env
 # Azure AI Foundry / OpenAI Configuration
 AZURE_OPENAI_ENDPOINT=https://your-foundry-resource.services.ai.azure.com/api/projects/your-project
 AZURE_OPENAI_API_KEY=your-api-key-here
+```
+
+## 🚀 **Usage Examples**
+
+### **Make Commands (Recommended)**
+```bash
+# Quick start with example question
+make run
+
+# Interactive mode - prompts for custom question
+make run-custom
+
+# Different output formats
+make run-json        # JSON output
+make run-quiet       # Minimal output
+make run-verbose     # Detailed logging
+```
+
+### **Direct CLI Usage**
+```bash
+# Basic usage
+poetry run foundry-pipeline-assistant -q "Analyze pipeline health" --output markdown
+
+# JSON output for integration
+poetry run foundry-pipeline-assistant -q "Which builds failed?" --output json
+
+# YAML output
+poetry run foundry-pipeline-assistant -q "Performance bottlenecks?" --output yaml
+```
+
+### **Example Questions**
+- **"Analyze the current CI/CD pipeline health and identify potential issues"**
+- **"Which pipelines failed in the last 24 hours?"**
+- **"What are the most common build failures?"**
+- **"Identify performance bottlenecks in our deployment process"**
+- **"Generate a summary report for management"**
 AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o
 AZURE_API_VERSION=2024-02-01
 

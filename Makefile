@@ -9,7 +9,8 @@ help:
 	@echo "🚀 Setup & Run:"
 	@echo "  make install     Install package with dev dependencies"
 	@echo "  make azurelogin  Setup Azure AI Foundry authentication"
-	@echo "  make run         Run pipeline analysis with default settings"
+	@echo "  make run         Run pipeline analysis with example question"
+	@echo "  make run-custom  Run with custom question (interactive prompt)"
 	@echo "  make dev-setup   Complete development environment setup"
 	@echo ""
 	@echo "🧪 Testing & Quality:"
@@ -120,16 +121,25 @@ azurelogin:
 	echo "🔧 Run 'make check-config' to verify the configuration"
 
 run:
-	@echo "🚀 Running pipeline analysis..."
-	poetry run foundry-pipeline-assistant
+	@echo "🚀 Running pipeline analysis with example question..."
+	poetry run foundry-pipeline-assistant -q "Analyze the current CI/CD pipeline health and identify any potential issues or improvements" --output markdown
+
+run-custom:
+	@echo "🎯 Running pipeline analysis with custom question..."
+	@read -p "Enter your question: " question; \
+	poetry run foundry-pipeline-assistant -q "$$question" --output markdown
+
+run-json:
+	@echo "🚀 Running pipeline analysis (JSON output)..."
+	poetry run foundry-pipeline-assistant -q "Analyze the current CI/CD pipeline health and identify any potential issues or improvements" --output json
 
 run-quiet:
 	@echo "🤫 Running pipeline analysis (quiet mode)..."
-	poetry run foundry-pipeline-assistant --quiet
+	poetry run foundry-pipeline-assistant -q "Analyze the current CI/CD pipeline health and identify any potential issues or improvements" --quiet --output markdown
 
 run-verbose:
 	@echo "📊 Running pipeline analysis (verbose mode)..."
-	poetry run foundry-pipeline-assistant --verbose
+	poetry run foundry-pipeline-assistant -q "Analyze the current CI/CD pipeline health and identify any potential issues or improvements" --verbose --output markdown
 
 test:
 	@echo "🧪 Running test suite..."
