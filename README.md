@@ -6,7 +6,13 @@
 
 AI-powered CI/CD pipeline analysis tool that provides intelligent insights, error detection, and executive reporting for Bamboo pipelines using Azure AI Foundry assistants.
 
-## 🚀 **Installation**
+## � **Demo**
+
+![Foundry Pipeline Assistant Demo](demo.gif)
+
+*See the assistant in action: installation, configuration, and pipeline analysis with various output formats*
+
+## �🚀 **Installation**
 
 ### **Clone Repository**
 ```bash
