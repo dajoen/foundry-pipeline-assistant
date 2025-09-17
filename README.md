@@ -1,6 +1,23 @@
 # Foundry Pipeline Assistant
 
-AI-powered CI/CD pipeline analysis tool that provides intelligent insights, error detection, and executive reporting for Bamboo pipelines.
+[![GitHub](https://img.shields.io/badge/GitHub-foundry--pipeline--assistant-blue?logo=github)](https://github.com/dajoen/foundry-pipeline-assistant)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue?logo=python)](https://python.org)
+[![Azure AI](https://img.shields.io/badge/Azure%20AI-Foundry-blue?logo=microsoft-azure)](https://ai.azure.com)
+
+AI-powered CI/CD pipeline analysis tool that provides intelligent insights, error detection, and executive reporting for Bamboo pipelines using Azure AI Foundry assistants.
+
+## 🚀 **Installation**
+
+### **Clone Repository**
+```bash
+git clone https://github.com/dajoen/foundry-pipeline-assistant.git
+cd foundry-pipeline-assistant
+```
+
+### **Install Dependencies**
+```bash
+pip install -r requirements.txt
+```
 
 ## 🔄 **System Flow**
 
@@ -323,11 +340,53 @@ clean:
 - Use service accounts for Bamboo integration
 - Rotate API keys regularly
 - Consider VPN/private endpoints for production
+- **Never commit `.env` files** - they're automatically ignored by `.gitignore`
+
+## 🤝 **Contributing**
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+### **Development Setup**
+```bash
+# Clone the repository
+git clone https://github.com/dajoen/foundry-pipeline-assistant.git
+cd foundry-pipeline-assistant
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Copy environment template
+cp .env.example .env
+# Edit .env with your Azure AI credentials
+
+# Run tests
+make test
+
+# Run linting
+make lint
+```
+
+### **Reporting Issues**
+- 🐛 **Bug Reports**: [Create an issue](https://github.com/dajoen/foundry-pipeline-assistant/issues/new?template=bug_report.md)
+- 💡 **Feature Requests**: [Request a feature](https://github.com/dajoen/foundry-pipeline-assistant/issues/new?template=feature_request.md)
+- 📚 **Documentation**: Help improve our docs
+
+## 🌟 **Star History**
+
+If this project helps you, please consider giving it a ⭐️ on [GitHub](https://github.com/dajoen/foundry-pipeline-assistant)!
 
 ## 📝 **License**
 
-MIT License - see LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 **Acknowledgments**
+
+- Built with [Azure AI Foundry](https://ai.azure.com) for intelligent pipeline analysis
+- Inspired by DevOps best practices and CI/CD optimization needs
+- Thanks to all contributors and the open-source community
 
 ---
 
-*For questions, issues, or contributions, please contact the DevOps team or create an issue in the repository.*
+**🔗 Repository**: https://github.com/dajoen/foundry-pipeline-assistant  
+**📧 Issues**: https://github.com/dajoen/foundry-pipeline-assistant/issues  
+**💬 Discussions**: https://github.com/dajoen/foundry-pipeline-assistant/discussions
