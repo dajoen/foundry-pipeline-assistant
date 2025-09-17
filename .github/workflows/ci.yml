@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.13']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e ".[dev]"
+
+    - name: Lint with ruff
+      run: |
+        ruff check .
+
+    - name: Format check with ruff
+      run: |
+        ruff format --check .
+
+    - name: Run tests
+      run: |
+        pytest -v tests/
+      env:
+        # Mock environment variables for testing
+        AZURE_OPENAI_ENDPOINT: "https://mock.foundry.services.ai.azure.com/api/projects/mock"
+        AZURE_OPENAI_API_KEY: "mock-api-key" 
+        AZURE_OPENAI_DEPLOYMENT_NAME: "mock-gpt-4"
+        AZURE_API_VERSION: "2024-02-01"
+
+    - name: Run smoke test
+      run: |
+        python check_config.py || true  # Allow config check to fail in CI
+        python -c "
+        import sys
+        sys.path.insert(0, '.')
+        from services.bamboo_mock import get_bamboo_plans
+        from services.logs_mock import get_pipeline_logs
+        print('✅ Mock services importable')
+        plans = get_bamboo_plans()
+        print(f'✅ Got {len(plans)} mock plans')
+        logs = get_pipeline_logs('PROJ-PLAN1')
+        print('✅ Mock logs working')
+        "
+      env:
+        AZURE_OPENAI_ENDPOINT: "https://mock.foundry.services.ai.azure.com/api/projects/mock"
+        AZURE_OPENAI_API_KEY: "mock-api-key"
+        AZURE_OPENAI_DEPLOYMENT_NAME: "mock-gpt-4"
