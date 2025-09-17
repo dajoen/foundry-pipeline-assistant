@@ -14,9 +14,10 @@ from .logs_mock import get_all_logs
 from .analyzer_agent import analyze_multiple_pipelines
 from .reporting_agent import aggregate_and_report
 
-# Configure logging
+# Configure logging with ERROR as default level
+# This can be overridden by the main application based on verbosity flags
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.ERROR,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
@@ -47,30 +48,30 @@ def run(question: str) -> Dict[str, Any]:
         3
     """
     start_time = datetime.now()
-    logger.info(f"Starting pipeline analysis workflow for question: '{question}'")
+    logger.info(f"Starting pipeline analysis for question: '{question}'")
     
     try:
         # Step 1: Get Bamboo plans (mock data)
-        logger.info("Step 1: Fetching Bamboo plans...")
+        logger.debug("Step 1: Fetching Bamboo plans...")
         raw_bamboo_data = get_bamboo_plans()
         normalized_plans = _normalize_bamboo_plans(raw_bamboo_data)
-        logger.info(f"Retrieved {len(normalized_plans)} pipelines")
+        logger.debug(f"Retrieved {len(normalized_plans)} pipelines")
         
         # Step 2: Fetch logs for each pipeline (mock data)
-        logger.info("Step 2: Fetching pipeline logs...")
+        logger.debug("Step 2: Fetching pipeline logs...")
         all_logs = get_all_logs(normalized_plans)
         total_runs = sum(len(logs.get('runs', [])) for logs in all_logs)
-        logger.info(f"Retrieved logs for {total_runs} total runs across all pipelines")
+        logger.debug(f"Retrieved logs for {total_runs} total runs across all pipelines")
         
         # Step 3: Analyze each pipeline via analyzer_agent
-        logger.info("Step 3: Analyzing pipelines with AI agent...")
+        logger.debug("Step 3: Analyzing pipelines with AI agent...")
         analyses = analyze_multiple_pipelines(all_logs)
-        logger.info(f"Completed analysis for {len(analyses)} pipelines")
+        logger.debug(f"Completed analysis for {len(analyses)} pipelines")
         
         # Step 4: Aggregate and generate report via reporting_agent
-        logger.info("Step 4: Generating executive report...")
+        logger.debug("Step 4: Generating executive report...")
         report = aggregate_and_report(analyses, all_logs)
-        logger.info(f"Generated report with {report['stats']['errors_total']} total errors found")
+        logger.info(f"Analysis complete: {report['stats']['errors_total']} errors found across {len(analyses)} pipelines")
         
         # Step 5: Compile complete workflow result
         end_time = datetime.now()
@@ -136,7 +137,7 @@ def run(question: str) -> Dict[str, Any]:
             "question": question
         }
         
-        logger.info(f"Workflow completed successfully in {execution_time:.2f} seconds")
+        logger.info(f"Pipeline analysis completed successfully ({execution_time:.1f}s)")
         return workflow_result
         
     except Exception as e:
@@ -202,7 +203,7 @@ def _normalize_bamboo_plans(raw_bamboo_data: Dict[str, Any]) -> List[Dict[str, A
     # Sort by key for deterministic ordering
     normalized.sort(key=lambda x: x['key'])
     
-    logger.info(f"Normalized {len(normalized)} plans")
+    logger.debug(f"Normalized {len(normalized)} plans")
     return normalized
 
 

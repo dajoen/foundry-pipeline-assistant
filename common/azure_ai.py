@@ -171,7 +171,7 @@ class AzureAIClient:
                     credential=DefaultAzureCredential(),
                     endpoint=self.endpoint
                 )
-                logger.info("Azure AI Projects client initialized for assistant functionality")
+                logger.debug("Azure AI Projects client initialized for assistant functionality")
             except Exception as e:
                 logger.warning(f"Failed to initialize Azure AI Projects client: {e}. Will use HTTP fallback.")
                 self.ai_project_client = None

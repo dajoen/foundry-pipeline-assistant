@@ -7,6 +7,7 @@ questions and multiple output formats.
 """
 
 import json
+import logging
 import os
 import sys
 from pathlib import Path
@@ -45,17 +46,25 @@ def validate_azure_config() -> None:
 
 
 @click.command()
-@click.option('--question', '-q', 
-              help='The question to analyze about CI/CD pipelines',
-              required=True)
-@click.option('--output', '-o', 
-              type=click.Choice(['json', 'yaml', 'markdown']), 
-              default='json',
-              help='Output format (default: json)')
+@click.option('-q', '--question', required=True, help='The question to analyze about CI/CD pipelines')
+@click.option('-o', '--output', type=click.Choice(['json', 'yaml', 'markdown']), default='json', help='Output format (default: json)')
 @click.option('--quiet', is_flag=True, help='Suppress progress messages')
 @click.option('--verbose', is_flag=True, help='Show detailed processing steps')
-def main(question, output, quiet, verbose):
+def main(question: str, output: str, quiet: bool, verbose: bool) -> None:
     """Foundry Pipeline Assistant - AI-powered CI/CD pipeline analysis."""
+    
+    # Configure logging based on verbosity
+    if verbose:
+        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    elif quiet:
+        logging.basicConfig(level=logging.ERROR, format='%(levelname)s: %(message)s')
+    else:
+        logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+    
+    # Suppress Azure SDK verbose logging unless in debug mode
+    if not verbose:
+        logging.getLogger('azure.core.pipeline.policies.http_logging_policy').setLevel(logging.WARNING)
+        logging.getLogger('azure.identity').setLevel(logging.WARNING)
     
     # Validate Azure configuration early
     validate_azure_config()
