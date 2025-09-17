@@ -1,17 +1,14 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
-[project]
+[tool.poetry]
 name = "foundry-pipeline-assistant"
 version = "0.1.0"
 description = "A pipeline assistant for Foundry data workflows"
-readme = "README.md"
-requires-python = ">=3.13"
+authors = ["Jeroen Verhoeven <jeroen@example.com>"]
 license = "MIT"
-authors = [
-    { name = "Your Name", email = "your.email@example.com" },
-]
+readme = "README.md"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -19,31 +16,30 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.13",
 ]
-dependencies = [
-    "python-dotenv",
-    "httpx",
-    "pydantic",
-    "click",
-    "typing-extensions",
-]
 
-[project.scripts]
+[tool.poetry.dependencies]
+python = "^3.13"
+python-dotenv = "*"
+httpx = "*"
+pydantic = "*"
+click = "*"
+typing-extensions = "*"
+azure-ai-projects = "~1.0.0b11"
+azure-identity = "~1.20.0"
+ansible-core = "~2.17.0"
+
+[tool.poetry.scripts]
 foundry-pipeline-assistant = "foundry_pipeline_assistant:main"
 
-[project.optional-dependencies]
-dev = [
-    "pytest",
-    "requests-mock",
-    "ruff",
-]
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+requests-mock = "*"
+ruff = "*"
 
-[project.urls]
-Homepage = "https://github.com/yourusername/foundry-pipeline-assistant"
-Repository = "https://github.com/yourusername/foundry-pipeline-assistant.git"
-Issues = "https://github.com/yourusername/foundry-pipeline-assistant/issues"
-
-[tool.hatch.build.targets.wheel]
-packages = ["foundry_pipeline_assistant"]
+[tool.poetry.urls]
+"Homepage" = "https://github.com/dajoen/foundry-pipeline-assistant"
+"Repository" = "https://github.com/dajoen/foundry-pipeline-assistant.git"
+"Issues" = "https://github.com/dajoen/foundry-pipeline-assistant/issues"
 
 [tool.ruff]
 line-length = 100

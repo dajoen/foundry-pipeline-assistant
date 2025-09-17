@@ -29,12 +29,12 @@ help:
 
 install:
 	@echo "📦 Installing foundry-pipeline-assistant..."
-	pip install -e ".[dev]"
+	poetry install --with dev
 	@echo "✅ Installation complete!"
 
 check-config:
 	@echo "🔧 Validating Azure AI configuration..."
-	python check_config.py
+	poetry run python check_config.py
 
 azurelogin:
 	@echo "🔐 Setting up Azure AI Foundry authentication..."
@@ -121,24 +121,24 @@ azurelogin:
 
 run:
 	@echo "🚀 Running pipeline analysis..."
-	foundry-pipeline-assistant
+	poetry run foundry-pipeline-assistant
 
 run-quiet:
 	@echo "🤫 Running pipeline analysis (quiet mode)..."
-	foundry-pipeline-assistant --quiet
+	poetry run foundry-pipeline-assistant --quiet
 
 run-verbose:
 	@echo "📊 Running pipeline analysis (verbose mode)..."
-	foundry-pipeline-assistant --verbose
+	poetry run foundry-pipeline-assistant --verbose
 
 test:
 	@echo "🧪 Running test suite..."
-	python run_tests.py
+	poetry run python run_tests.py
 	@echo "✅ Tests complete!"
 
 test-smoke:
 	@echo "🔥 Running smoke test..."
-	python run_tests.py smoke
+	poetry run python run_tests.py smoke
 
 test-pytest: 
 	@echo "🧪 Running tests with pytest..."
@@ -190,13 +190,13 @@ dev-setup:
 health:
 	@echo "🩺 System health check..."
 	foundry-pipeline-assistant --help > /dev/null && echo "✅ CLI working"
-	python -c "from services import run; print('✅ Services importable')"
-	python -c "from common import llm_text; print('✅ Azure AI client available')"
+	poetry run python -c "from services import run; print('✅ Services importable')"
+	poetry run python -c "from common import llm_text; print('✅ Azure AI client available')"
 
 # Production-like run
 prod-run:
 	@echo "🏭 Production-style run..."
-	foundry-pipeline-assistant --question "Production health check" --output prod-report.json
+	poetry run foundry-pipeline-assistant --question "Production health check" --output prod-report.json
 	@echo "📄 Report saved to prod-report.json"
 
 # Development workflow

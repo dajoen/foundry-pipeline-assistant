@@ -1,7 +1,7 @@
 # Foundry Pipeline Assistant
 
 [![GitHub](https://img.shields.io/badge/GitHub-foundry--pipeline--assistant-blue?logo=github)](https://github.com/dajoen/foundry-pipeline-assistant)
-[![Python](https://img.shields.io/badge/Python-3.11+-blue?logo=python)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.13+-blue?logo=python)](https://python.org)
 [![Azure AI](https://img.shields.io/badge/Azure%20AI-Foundry-blue?logo=microsoft-azure)](https://ai.azure.com)
 
 AI-powered CI/CD pipeline analysis tool that provides intelligent insights, error detection, and executive reporting for Bamboo pipelines using Azure AI Foundry assistants.
@@ -16,7 +16,11 @@ cd foundry-pipeline-assistant
 
 ### **Install Dependencies**
 ```bash
-pip install -r requirements.txt
+# Install Poetry if you haven't already:
+# curl -sSL https://install.python-poetry.org | python3 -
+
+# Install project dependencies:
+poetry install
 ```
 
 ## 🔄 **System Flow**
@@ -308,7 +312,7 @@ Create a `Makefile` for convenience:
 .PHONY: install run test lint clean
 
 install:
-	pip install -e ".[dev]"
+	poetry install --with dev
 
 run:
 	foundry-pipeline-assistant
@@ -353,7 +357,7 @@ git clone https://github.com/dajoen/foundry-pipeline-assistant.git
 cd foundry-pipeline-assistant
 
 # Install dependencies
-pip install -r requirements.txt
+poetry install --with dev
 
 # Copy environment template
 cp .env.example .env
